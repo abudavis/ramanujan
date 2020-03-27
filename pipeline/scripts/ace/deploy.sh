@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # NAME: deploy.sh
-# Usage: ./deploy.sh <env> <repo-name> <cpu-limit> <pass>
+# Usage: ./deploy.sh <env> <repo-name> <image-name> <cpu-limit> <pass>
 # INITIAL CREATION DATE:	March 18, 2020
 # lAST MODIFIED DATE:	March 26, 2020
 # AUTHOR:   www.integrationpattern.com
@@ -9,13 +9,15 @@
 # 	This script deploys helm chart for specified product in IBM CP4I, the container image is pulled from the internal OCP image registry
 
 if [ -z $1 ] ; then
-	echo "Usage: ./deploy.sh <env> <repo-name> <cpu-limit> <pass>"
+	echo "Usage: ./deploy.sh <env> <repo-name> <image-name> <cpu-limit> <pass>"
   exit 1
 else
   ENV=$1
   #qa or prod
   RELEASENAME=$2
   #dummy-ds-rel-java
+	ACEMQCLIENTIMAGETMP=$2
+	#Image name without prefix "-amd64"
   CPULIMIT=$3
   #100m
   PASS=$4
@@ -48,7 +50,7 @@ ACEIMAGETYPE="acemqclient"
 #Replace with image created by Jenkins
 #Remove the suffix "-amd64" at end of image as IBM helm chart inserts it at the end of the image during helm install.
 #ACEMQCLIENTIMAGETMP=$(echo $ACEMQCLIENTIMAGE | sed 's/-amd64//g');
-ACEMQCLIENTIMAGETMP=$RELEASENAME;
+#ACEMQCLIENTIMAGETMP=$RELEASENAME;
 #note that the actual image name has as suffix "-amd64": "$RELEASENAME-amd64". This $RELEASENAME comes from repo name of the git which has the integration(s)
 ACEMQCLIENTIMAGEURL="image-registry.openshift-image-registry.svc:5000/$NAMESPACE/$ACEMQCLIENTIMAGETMP"
 echo "---"
@@ -97,3 +99,4 @@ oc expose svc $RELEASENAME-ibm-ace-server-icp4i-prod --port=7800
 echo "---"
 echo "Finished Script"
 echo "---"
+
