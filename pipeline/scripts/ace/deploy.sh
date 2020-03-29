@@ -46,7 +46,7 @@ ACEHELMCHART="pipeline/scripts/ace/*.tgz"
 #ibm-ace-server-icp4i-prod-3.0.0.tgz or pipeline/scripts/ace/*.tgz
 NAMESPACE="ace"
 ACEIMAGETYPE="acemqclient"
-
+IMAGEPULLPOLICY="Always"
 #Replace with image created by Jenkins
 #Remove the suffix "-amd64" at end of image as IBM helm chart inserts it at the end of the image during helm install.
 #ACEMQCLIENTIMAGETMP=$(echo $ACEMQCLIENTIMAGE | sed 's/-amd64//g');
@@ -85,13 +85,13 @@ if [ "$DEPLOYTYPE" == "install" ]; then
   echo "---"
   echo "Applying Helm $DEPLOYTYPE Chart for ACE..."
   echo "---"
-  linux-amd64/helm $DEPLOYTYPE --namespace $NAMESPACE --name $RELEASENAME $ACEHELMCHART --set imageType=$ACEIMAGETYPE --set productionDeployment=$ISPROD --set image.acemqclient=$ACEMQCLIENTIMAGEURL --set image.pullSecret=$IMAGEPULLSECRET --set persistence.enabled=false --set persistence.useDynamicProvisioning=false --set aceonly.resources.requests.cpu=25m --set aceonly.resources.limits.cpu=$CPULIMIT --set aceonly.replicaCount=1 --set odTracingConfig.enabled=true --set odTracingConfig.odTracingNamespace=integration --set license=accept --debug --tls
+  linux-amd64/helm $DEPLOYTYPE --namespace $NAMESPACE --name $RELEASENAME $ACEHELMCHART --set imageType=$ACEIMAGETYPE --set productionDeployment=$ISPROD --set image.acemqclient=$ACEMQCLIENTIMAGEURL --set image.pullSecret=$IMAGEPULLSECRET --set image.pullPolicy=$IMAGEPULLPOLICY --set persistence.enabled=false --set persistence.useDynamicProvisioning=false --set aceonly.resources.requests.cpu=25m --set aceonly.resources.limits.cpu=$CPULIMIT --set aceonly.replicaCount=1 --set odTracingConfig.enabled=true --set odTracingConfig.odTracingNamespace=integration --set license=accept --debug --tls
 #$ACEHELMCHART?raw=true
 elif [ "$DEPLOYTYPE" == "upgrade" ]; then
   echo "---"
   echo "Applying Helm $DEPLOYTYPE Chart for ACE..."
   echo "---"
-  linux-amd64/helm $DEPLOYTYPE --namespace $NAMESPACE $RELEASENAME $ACEHELMCHART --set imageType=$ACEIMAGETYPE --set productionDeployment=$ISPROD --set image.acemqclient=$ACEMQCLIENTIMAGEURL --set image.pullSecret=$IMAGEPULLSECRET --set persistence.enabled=false --set persistence.useDynamicProvisioning=false --set aceonly.resources.requests.cpu=25m --set aceonly.resources.limits.cpu=$CPULIMIT --set aceonly.replicaCount=1 --set odTracingConfig.enabled=true --set odTracingConfig.odTracingNamespace=integration --set license=accept --debug --tls
+  linux-amd64/helm $DEPLOYTYPE --namespace $NAMESPACE $RELEASENAME $ACEHELMCHART --set imageType=$ACEIMAGETYPE --set productionDeployment=$ISPROD --set image.acemqclient=$ACEMQCLIENTIMAGEURL --set image.pullSecret=$IMAGEPULLSECRET --set image.pullPolicy=$IMAGEPULLPOLICY --set persistence.enabled=false --set persistence.useDynamicProvisioning=false --set aceonly.resources.requests.cpu=25m --set aceonly.resources.limits.cpu=$CPULIMIT --set aceonly.replicaCount=1 --set odTracingConfig.enabled=true --set odTracingConfig.odTracingNamespace=integration --set license=accept --debug --tls
 fi
 
 echo "Adding route for the ace server pod"
