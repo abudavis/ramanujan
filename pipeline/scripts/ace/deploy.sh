@@ -16,11 +16,11 @@ else
   #qa or prod
   RELEASENAME=$2
   #dummy-ds-rel-java
-	ACEMQCLIENTIMAGETMP=$2
+	ACEMQCLIENTIMAGETMP=$3
 	#Image name without prefix "-amd64"
-  CPULIMIT=$3
+  CPULIMIT=$4
   #100m
-  PASS=$4
+  PASS=$5
   echo ----
   echo "read value"
   echo ----
