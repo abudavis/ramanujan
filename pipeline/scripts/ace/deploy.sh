@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # NAME: deploy.sh
-# Usage: ./deploy.sh <env> <repo-name> <image-name> <cpu-limit> <pass>
+# Usage: ./deploy.sh <env> <repo-name> <image-name> <ace-image-type> <cpu-limit> <pass>
 # INITIAL CREATION DATE:	March 18, 2020
 # lAST MODIFIED DATE:	March 26, 2020
 # AUTHOR:   www.integrationpattern.com
@@ -9,7 +9,7 @@
 # 	This script deploys helm chart for specified product in IBM CP4I, the container image is pulled from the internal OCP image registry
 
 if [ -z $1 ] ; then
-	echo "Usage: ./deploy.sh <env> <repo-name> <image-name> <cpu-limit> <pass>"
+	echo "Usage: ./deploy.sh <env> <repo-name> <image-name> <ace-image-type> <cpu-limit> <pass>"
   exit 1
 else
   ENV=$1
@@ -18,9 +18,11 @@ else
   #dummy-ds-rel-java
 	ACEMQCLIENTIMAGETMP=$3
 	#Image name without prefix "-amd64"
-  CPULIMIT=$4
+	ACEIMAGETYPE=$4
+	#acemqclient
+  CPULIMIT=$5
   #100m
-  PASS=$5
+  PASS=$6
   echo ----
   echo "read value"
   echo ----
@@ -45,7 +47,6 @@ ACEHELMCHART="pipeline/scripts/ace/*.tgz"
 #was "https://raw.githubusercontent.com/IBM/charts/master/repo/entitled/ibm-ace-server-icp4i-prod-3.0.0.tgz"
 #ibm-ace-server-icp4i-prod-3.0.0.tgz or pipeline/scripts/ace/*.tgz
 NAMESPACE="ace"
-ACEIMAGETYPE="acemqclient"
 IMAGEPULLPOLICY="Always"
 #Replace with image created by Jenkins
 #Remove the suffix "-amd64" at end of image as IBM helm chart inserts it at the end of the image during helm install.
