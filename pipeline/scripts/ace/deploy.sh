@@ -33,7 +33,7 @@ ICPFQDN="icp-console.apps.cluster.subdomain.domain.com"
 ISPROD="false"
 IMAGEPULLSECRET="deployer-dockercfg-7vxwq"
 elif [ "$ENV" == "prod" ]; then
-ICPFQDN="icp-console.cpi.cluster.ocp.tine.no"
+ICPFQDN="icp-console.apps.prodcluster.subdomain.domain.com"
 ISPROD="true"
 IMAGEPULLSECRET="deployer-dockercfg-xxxxxx"
 else
