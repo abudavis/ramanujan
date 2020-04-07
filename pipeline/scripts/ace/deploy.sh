@@ -29,7 +29,7 @@ else
 fi
 
 if [ "$ENV" == "qa" ]; then
-ICPFQDN="icp-console.cpi.testcluster.ocp.tine.no"
+ICPFQDN="icp-console.apps.cluster.subdomain.domain.com"
 ISPROD="false"
 IMAGEPULLSECRET="deployer-dockercfg-7vxwq"
 elif [ "$ENV" == "prod" ]; then
