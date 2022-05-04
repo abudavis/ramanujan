@@ -16,3 +16,11 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+
+- script: oc get po
+  displayName: 'oc command test'
+
+- script: |
+    echo Running oc command:
+    oc get po
+  displayName: 'oc command test'
